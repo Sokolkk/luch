@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Форма &amp; Луч — ночники с гравировкой ручной работы | Балаково</title>
+<meta name="description" content="Авторские интерьерные ночники с лазерной гравировкой. Сделаю за 24 часа по вашему фото или рисунку. Подарки и 3D-печать. Доставка по всей России.">
+<meta name="theme-color" content="#0f0e0c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Форма &amp; Луч — ночники с гравировкой ручной работы">
+<meta property="og:description" content="Ночники с гравировкой. Сделаю за 24 часа, доставлю по всей России.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:url" content="https://formaluch.ru/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.remove("no-js");</script>
+  <!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113571229', 'ym');
+
+    ym(113571229, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/113571229" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+
+<!-- Декоративные слои: 3D-сцена с лазером, мягкое свечение и блик от курсора -->
+<canvas class="fx-scene" id="fxParticles" aria-hidden="true"></canvas>
+<div class="fx-ambient" aria-hidden="true"></div>
+<div class="fx-spotlight" id="fxSpotlight" aria-hidden="true"></div>
+
+<a class="skip" href="#catalog">Перейти к каталогу</a>
+
+<header class="nav" id="top">
+  <div class="wrap nav__in">
+    <a class="nav__brand" href="#top">Форма &amp; Луч</a>
+    <p class="nav__tag">Ночники · гравировка · 3D-печать</p>
+    <button class="nav__toggle" type="button" aria-label="Открыть меню" aria-haspopup="dialog" aria-controls="siteMenu">
+      <span class="nav__toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="nav__toggle-text">Меню</span>
+    </button>
+  </div>
+</header>
+
+<!-- Меню сайта: нативный dialog рисуется в top layer, поэтому это fixed-оверлей
+     поверх всей страницы без z-index-войн. Одно меню на все экраны:
+     переключатель проектов, ссылки по разделам и кнопки связи. -->
+<dialog class="mmenu" id="siteMenu" aria-label="Меню сайта">
+  <div class="mmenu__top">
+    <span class="mmenu__brand">Форма &amp; Луч</span>
+    <button class="mmenu__close" type="button" data-menu-close aria-label="Закрыть меню">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="mmenu__panel">
+    <div class="mmenu__group mmenu__group--projects">
+      <!-- Переключатель проектов: цвет точки = акцент того сайта -->
+      <p class="mmenu__label">Проекты</p>
+      <span class="switch" role="group" aria-label="Проекты">
+        <a class="switch__item" href="https://formaluch.ru/" target="_blank" rel="noopener" aria-current="true" title="Ночники — formaluch.ru">
+          <span class="switch__dot" aria-hidden="true"></span>
+          <span class="switch__name">Ночники</span>
+        </a>
+        <a class="switch__item switch__item--print" href="https://3d.formaluch.ru/" target="_blank" rel="noopener" title="3D-печать — 3d.formaluch.ru">
+          <span class="switch__dot" aria-hidden="true"></span>
+          <span class="switch__name">3D-печать</span>
+        </a>
+        <a class="switch__item switch__item--dev" href="https://futuresphinx.ru/" target="_blank" rel="noopener" title="Разработка сайтов — futuresphinx.ru">
+          <span class="switch__dot" aria-hidden="true"></span>
+          <span class="switch__name">Разработка</span>
+        </a>
+      </span>
+    </div>
+
+    <div class="mmenu__group mmenu__group--links">
+      <p class="mmenu__label">Разделы</p>
+      <nav class="mmenu__links" id="siteMenuLinks" aria-label="Навигация по разделам">
+        <a href="#catalog">Каталог</a>
+        <a href="#peripherals">Периферия</a>
+        <a href="#engraving">Гравировка</a>
+        <a href="#printing">3D-печать</a>
+        <a href="#how">Как заказать</a>
+        <a href="#maker">Мастер</a>
+        <a href="#delivery">Доставка</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+    </div>
+
+    <div class="mmenu__cta">
+      <a class="btn" href="https://t.me/sokolkk" target="_blank" rel="noopener">Написать в Telegram</a>
+      <a class="btn btn--ghost" href="https://vk.com/formaluch" target="_blank" rel="noopener">Написать во ВКонтакте</a>
+    </div>
+  </div>
+</dialog>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero__glow" aria-hidden="true"></span>
+    <div class="wrap hero__in">
+      <div>
+        <p class="eyebrow">Ручная работа · Балаково</p>
+        <h1 class="hero__title">Свет, который<br>остаётся с вами</h1>
+        <p class="lead">Ночники с гравировкой ручной работы. Сделаем за 24 часа. Доставим по всей России.</p>
+        <div class="hero__cta">
+          <a class="btn" href="#catalog">Выбрать подарок</a>
+          <a class="btn btn--ghost" href="#engraving">Как это сделано</a>
+        </div>
+      </div>
+      <div class="hero__media">
+        <img onerror="this.onerror=null;void 0" src="assets/site_hero_00001.webp" width="1248" height="832" alt="Ночник с гравировкой кота в деревянном основании, светящийся тёплым светом в интерьере" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Ночники · Гравировка · Дерево · Акрил · Металл · Подарки ·</span>
+      <span>Ночники · Гравировка · Дерево · Акрил · Металл · Подарки ·</span>
+    </div>
+  </div>
+
+  <!-- CATALOG -->
+  <section class="section" id="catalog">
+    <div class="wrap">
+      <p class="eyebrow">Каталог</p>
+      <h2 class="h2 h2--shine h2--glow">Ночник с вашей гравировкой</h2>
+
+      <article class="product reveal">
+        <div class="product__media">
+          <img onerror="this.onerror=null;void 0" src="assets/site_card_cat_00001.webp" width="1184" height="896" alt="Ночник «Кот»: акриловая панель с гравировкой кота в деревянном основании" loading="lazy">
+        </div>
+        <div class="product__body">
+          <h3 class="product__name">Ночник «Кот»</h3>
+          <p class="product__desc">Акриловая панель с лазерной гравировкой и деревянное основание с тёплой подсветкой. Любой рисунок — по вашему фото или готовому макету.</p>
+          <ul class="spec">
+            <li>Гравировка по вашему изображению</li>
+            <li>Тёплая подсветка, питание от USB</li>
+            <li>Подарочная упаковка</li>
+          </ul>
+          <p class="price">2 200 <span>₽</span></p>
+          <a class="btn" href="https://vk.com/formaluch" target="_blank" rel="noopener">Заказать</a>
+        </div>
+      </article>
+
+      <p class="note">Остальное — примеры гравировки: сделаем любой рисунок под заказ.</p>
+
+      <ul class="tiles">
+        <li class="tile reveal"><img onerror="this.onerror=null;void 0" src="assets/ex_dog_00001.webp" width="1024" height="1024" alt="Гравировка собаки на акриловом ночнике" loading="lazy"><span>Собака</span></li>
+        <li class="tile reveal"><img onerror="this.onerror=null;void 0" src="assets/ex_dragon_00001.webp" width="1024" height="1024" alt="Гравировка дракона на акриловом ночнике" loading="lazy"><span>Дракон</span></li>
+        <li class="tile reveal"><img onerror="this.onerror=null;void 0" src="assets/ex_heart_00001.webp" width="1024" height="1024" alt="Гравировка сердца на акриловом ночнике" loading="lazy"><span>Сердце</span></li>
+        <li class="tile reveal"><img onerror="this.onerror=null;void 0" src="assets/ex_glass_00001.webp" width="1024" height="1024" alt="Гравировка на стеклянном бокале" loading="lazy"><span>Бокал</span></li>
+        <li class="tile reveal"><img onerror="this.onerror=null;void 0" src="assets/ex_knife_00001.webp" width="1024" height="1024" alt="Гравировка на клинке складного ножа" loading="lazy"><span>Нож</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ГРАВИРОВКА КЛАВИАТУР И МЫШЕЙ -->
+  <section class="section section--feature" id="peripherals">
+    <div class="wrap">
+      <p class="eyebrow">Услуга · УФ-лазер</p>
+      <h2 class="h2 h2--shine">Гравировка клавиатур и мышей</h2>
+      <p class="lead lead--wide">Наносим рисунок и надписи на корпуса периферии ультрафиолетовым лазером — тонкая линия, стойко к стиранию. Подарок, который работает каждый день.</p>
+
+      <article class="duo">
+        <figure class="duo__media reveal">
+          <!-- Слайдер примеров: прокрутка нативная (scroll-snap), поэтому
+               работает и без скрипта, а стрелки лишь помогают. -->
+          <div class="slider" id="engraveSlider">
+            <div class="slider__track">
+              <div class="slider__slide" data-title="Герб или монограмма" data-text="Классика для подарка: личный знак, инициалы или герб команды на верхней панели мыши. Работает на пластике и металле, линия остаётся тонкой.">
+                <img onerror="this.onerror=null;void 0" src="assets/uv_mouse_hero_00001.webp" width="1184" height="896" alt="Игровая мышь с гербом, выгравированным УФ-лазером на корпусе" loading="lazy">
+              </div>
+              <div class="slider__slide" data-title="Паук в паутине" data-text="Детальный рисунок с мелкими линиями — как раз тот случай, где УФ-лазер показывает себя лучше всего: паутина остаётся целой, без заплывов.">
+                <img onerror="this.onerror=null;void 0" src="assets/uv_mouse_spider_00001.webp" width="1184" height="896" alt="Мышь с гравировкой паука в паутине" loading="lazy">
+              </div>
+              <div class="slider__slide" data-title="Ваш любимый персонаж" data-text="Присылаете картинку или фото — переношу на корпус. Портрет, герой игры, аниме-образ: гравировка держит тонкие штрихи без потери читаемости.">
+                <img onerror="this.onerror=null;void 0" src="assets/uv_mouse_character_00001.webp" width="1184" height="896" alt="Мышь с гравировкой аниме-персонажа по рисунку заказчика" loading="lazy">
+              </div>
+              <div class="slider__slide" data-title="Котик" data-text="Простые милые рисунки ложатся аккуратной светлой линией и не выгорают со временем — рисунок остаётся в структуре пластика, а не поверх него.">
+                <img onerror="this.onerror=null;void 0" src="assets/uv_mouse_cat_00001.webp" width="1184" height="896" alt="Мышь с гравировкой улыбающегося котика" loading="lazy">
+              </div>
+            </div>
+
+            <div class="slider__info">
+              <h3 class="slider__title">Герб или монограмма</h3>
+              <p class="slider__text">Классика для подарка: личный знак, инициалы или герб команды на верхней панели мыши.</p>
+            </div>
+
+            <div class="slider__controls">
+              <button class="slider__arrow" type="button" data-slider-prev aria-label="Предыдущий пример">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+              </button>
+              <div class="slider__dots" role="tablist" aria-label="Примеры гравировки">
+                <button class="slider__dot" type="button" role="tab" aria-label="Пример 1: герб или монограмма"></button>
+                <button class="slider__dot" type="button" role="tab" aria-label="Пример 2: паук в паутине"></button>
+                <button class="slider__dot" type="button" role="tab" aria-label="Пример 3: ваш любимый персонаж"></button>
+                <button class="slider__dot" type="button" role="tab" aria-label="Пример 4: котик"></button>
+              </div>
+              <button class="slider__arrow" type="button" data-slider-next aria-label="Следующий пример">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </figure>
+        <div class="duo__body">
+          <h3>Что можно нанести</h3>
+          <ul class="spec">
+            <li>Имя, никнейм или дату на клавиатуре</li>
+            <li>Логотип команды, клуба или компании</li>
+            <li>Личный герб, монограмму, небольшой рисунок</li>
+            <li>Любимую цитату или посвящение</li>
+          </ul>
+          <div class="chips" role="list">
+            <span role="listitem">Клавиатура</span>
+            <span role="listitem">Мышь</span>
+            <span role="listitem">Наушники</span>
+            <span role="listitem">Корпус ПК</span>
+            <span role="listitem">Геймпад</span>
+          </div>
+          <p class="note note--tight">Свою периферию можно привезти или прислать — гравирую на вашем устройстве. Стоимость зависит от площади и сложности рисунка.</p>
+          <a class="btn" href="https://vk.com/formaluch" target="_blank" rel="noopener">Обсудить макет</a>
+        </div>
+      </article>
+
+      <div class="cards3">
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/uv_macro_00001.webp" width="1184" height="896" alt="Макросъёмка: УФ-лазер выжигает тонкие линии на клавише клавиатуры" loading="lazy">
+          <h3>Тонкая линия</h3>
+          <p>Ультрафиолетовый лазер работает по пластику и металлу: линия остаётся тонкой, без оплавленных краёв и запаха.</p>
+        </article>
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/uv_keyboard_hero_00001.webp" width="1248" height="832" alt="Механическая клавиатура с гравировкой на алюминиевом корпусе и пробеле" loading="lazy">
+          <h3>Корпус и клавиши</h3>
+          <p>Гравируем и верхнюю панель, и отдельные клавиши — рисунок держится на металле и на матовом пластике.</p>
+        </article>
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/uv_glow_00001.webp" width="1184" height="896" alt="Механическая клавиатура с тёплой подсветкой, проступающей между клавишами" loading="lazy">
+          <h3>С подсветкой и без</h3>
+          <p>Рисунок читается и на матовом корпусе, и сквозь подсветку — гравировка не мешает свету клавиш.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGRAVING -->
+  <section class="section" id="engraving">
+    <div class="wrap">
+      <p class="eyebrow">Примеры гравировки</p>
+      <h2 class="h2 h2--shine">Что можно нанести</h2>
+      <p class="lead lead--wide">Любое изображение превращаем в светящийся рисунок на акриле. Ниже — макро и сам процесс.</p>
+
+      <div class="cards2">
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/site_card_macro_00001.webp" width="1184" height="896" alt="Макросъёмка лазерной гравировки на акриле" loading="lazy">
+          <h3>Точность линий</h3>
+          <p>Лазер проходит по акрилу с точностью до десятых долей миллиметра — видны тончайшие штрихи.</p>
+        </article>
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/site_card_work_00001.webp" width="1184" height="896" alt="Лазерный станок в мастерской выжигает рисунок на акриле" loading="lazy">
+          <h3>Ручная работа</h3>
+          <p>Каждое изделие режем и гравируем сами: от макета до упаковки. Без посредников.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+<!-- 3D-ПЕЧАТЬ -->
+  <section class="section" id="printing">
+    <div class="wrap">
+      <p class="eyebrow">Услуга · 3D-печать</p>
+      <h2 class="h2 h2--shine">3D-печать на заказ</h2>
+      <p class="lead lead--wide">Печатаем детали на профессиональных 3D-принтерах Bambu Lab X2D: прототипы, мелкие серии, корпуса, крепёж и запчасти. 3D-печать совместима с лазерной гравировкой — наносим маркировку прямо на готовые изделия, получается профессиональное заводское исполнение. Работаем с частными заказами и с бизнесом — по договору и с закрывающими документами.</p>
+
+      <article class="duo">
+        <figure class="duo__media reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/print_hero_00001.webp" width="1184" height="896" alt="Профессиональный 3D-принтер в тёмной мастерской печатает деталь" loading="lazy">
+        </figure>
+        <div class="duo__body">
+          <p class="badge">3D-печать + лазер</p>
+          <h3>Что печатаем</h3>
+          <ul class="spec">
+            <li>Прототипы и функциональные образцы</li>
+            <li>Мелкие серии — от одной детали до партии</li>
+            <li>Корпуса для электроники: платы, датчики, блоки</li>
+            <li>Крепёж, переходники, оснастка, запчасти</li>
+            <li>Кастомные изделия и предметы интерьера</li>
+            <li><strong>Совместимо с лазерной гравировкой</strong> — наносим маркировку прямо на напечатанные изделия</li>
+          </ul>
+          <div class="chips" role="list">
+            <span role="listitem">PLA</span>
+            <span role="listitem">PETG</span>
+            <span role="listitem">ABS</span>
+            <span role="listitem">TPU</span>
+            <span role="listitem">Композиты</span>
+          </div>
+          <p class="note note--tight">Модель принимаем в STL, STEP, 3MF или OBJ. Если чертежа нет — сделаю 3D-модель по эскизу или образцу.</p>
+          <div class="duo__actions">
+            <a class="backlink" href="https://3d.formaluch.ru/" target="_blank" rel="noopener">3d.formaluch.ru <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 12 12 4M6 4h6v6"/></svg></a>
+            <a class="btn btn--ghost" href="https://t.me/sokolkk" target="_blank" rel="noopener">Обсудить задачу</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="cards2 cards2--triple">
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/print_macro_00001.webp" width="1184" height="896" alt="Макросъёмка: сопло 3D-принтера укладывает слой пластика" loading="lazy">
+          <h3>Точность слоя</h3>
+          <p>Высота слоя от 0,08 мм: ровные стенки, чистые отверстия и предсказуемая геометрия — деталь встаёт с первого раза.</p>
+        </article>
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/print_parts_00001.webp" width="1184" height="896" alt="Напечатанные на 3D-принтере функциональные детали и шестерни" loading="lazy">
+          <h3>Материал под задачу</h3>
+          <p>Подберу пластик под условия работы: от бюджетного PLA для макетов до PETG, ABS и TPU для нагруженных и гибких деталей.</p>
+        </article>
+        <article class="card reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/print_lasermark_00001.webp" width="1184" height="896" alt="Лазерная маркировка на напечатанном корпусе: шильдик, штрихкод и технические надписи" loading="lazy">
+          <h3>Маркировка после печати</h3>
+          <p>Совмещаю печать с лазером: серийные номера, шильдики, логотипы и технические надписи ложатся прямо на пластик. Стойко к стиранию, без наклеек и печатных этикеток — профессиональное заводское исполнение.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO ORDER -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <p class="eyebrow">Как заказать</p>
+      <h2 class="h2 h2--shine">Три шага до готового ночника</h2>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step__num">01</span>
+          <h3>Выбираете идею</h3>
+          <p>Готовый рисунок из каталога или своё фото — питомец, портрет, логотип, надпись.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step__num">02</span>
+          <h3>Согласуем макет</h3>
+          <p>Присылаю превью гравировки в день обращения. Правки без ограничений, пока не понравится.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step__num">03</span>
+          <h3>Делаю и отправляю</h3>
+          <p>Гравирую за 24 часа, упаковываю в подарочную коробку и отправляю по России.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- МАСТЕР -->
+  <section class="section" id="maker">
+    <div class="wrap">
+      <p class="eyebrow">Кто делает</p>
+      <h2 class="h2 h2--shine">Меня зовут Михаил</h2>
+
+      <article class="maker">
+        <figure class="maker__photo reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/maker_00001.webp" width="900" height="900" alt="Михаил — мастер мастерской «Форма &amp; Луч»" loading="lazy">
+        </figure>
+        <div class="maker__body">
+          <p class="lead">Я разработчик и мастер: делаю ночники с лазерной гравировкой в Балаково. Каждое изделие собираю сам — от макета до упаковки.</p>
+          <p>По образованию и работе я программист: занимаюсь ИИ и автоматизацией для бизнеса. Точность, которую требует код, я переношу в мастерскую — поэтому гравировка получается чистой, а сроки я держу.</p>
+          <dl class="facts facts--stack">
+            <div><dt>Опыт</dt><dd>3D-печать и лазерная гравировка — несколько лет, как хобби, которое стало делом</dd></div>
+            <div><dt>Оборудование</dt><dd>УФ-лазер, профессиональные 3D-принтеры Bambu Lab X2D</dd></div>
+            <div><dt>Что делаю сам</dt><dd>Готовлю макет, показываю превью, гравирую, упаковываю и отправляю</dd></div>
+            <div><dt>Сообщество</dt><dd><a href="https://vk.com/formaluch" target="_blank" rel="noopener">Мастерская подарков во ВКонтакте</a> — оттуда приходят почти все заказы</dd></div>
+          </dl>
+          <div class="maker__actions">
+            <a class="btn" href="https://vk.com/formaluch" target="_blank" rel="noopener">Написать мне во ВКонтакте</a>
+            <a class="btn btn--ghost" href="https://t.me/sokolkk" target="_blank" rel="noopener">Telegram</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Настоящие кадры: сняты как есть, без ретуши. Это один ночник
+           в разных условиях, поэтому подписи говорят про съёмку, а не про разные работы. -->
+      <h3 class="h3 h3--block">Мои работы без ретуши</h3>
+      <p class="lead lead--wide">Это настоящие ночники, которые я делал на заказ, — сняты на телефон, как есть. Один и тот же ночник днём и вечером, чтобы вы видели разницу. Ниже, в отзывах, ещё кадры от покупателей.</p>
+      <div class="cards2 cards2--work">
+        <article class="card card--work reveal">
+          <!-- У этой работы два дневных кадра: снятый на подоконнике целиком
+               и крупный план панели у окна. Оба важны, поэтому слайдер. -->
+          <div class="cslider" data-slider>
+            <div class="cslider__track">
+              <div class="cslider__slide">
+                <img onerror="this.onerror=null;void 0" src="assets/work_day_full.webp" width="1184" height="896" alt="Ночник целиком на подоконнике днём: акриловая панель с гравированным портретом в деревянном основании" loading="lazy">
+              </div>
+              <div class="cslider__slide">
+                <img onerror="this.onerror=null;void 0" src="assets/work_window.webp" width="1184" height="896" alt="Крупный план: гравировка по фотографии заказчика на акриловой панели у окна" loading="lazy">
+              </div>
+            </div>
+            <div class="cslider__dots" aria-hidden="true"></div>
+          </div>
+          <h3>Днём, без подсветки</h3>
+          <p>Ночник целиком: акриловая панель в деревянном основании. Гравировка по фотографии заказчика — черты лица, причёска, складки одежды. Днём видно, насколько тонко проходит линия.</p>
+        </article>
+        <article class="card card--work reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/work_glow.webp" width="1184" height="896" alt="Ночник с гравированным портретом в тёплой подсветке вечером" loading="lazy">
+          <h3>Вечером, с подсветкой</h3>
+          <p>Тот же ночник в тёмной комнате: подсветка снизу проявляет гравировку изнутри — так он выглядит, когда его включают.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY -->
+  <section class="section section--alt" id="delivery">
+    <div class="wrap">
+      <div class="panel reveal">
+        <h2 class="h3">Доставка и оплата</h2>
+        <dl class="facts">
+          <div><dt>Срок изготовления</dt><dd>24 часа после согласования макета</dd></div>
+          <div><dt>Отправка</dt><dd>СДЭК и Почта России по всей стране</dd></div>
+          <div><dt>Оплата</dt><dd>Перевод на карту или по счёту, после согласования</dd></div>
+          <div><dt>Упаковка</dt><dd>Подарочная коробка, защита плёнкой, инструкция</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section" id="reviews">
+    <div class="wrap">
+      <p class="eyebrow">Отзывы</p>
+      <h2 class="h2 h2--shine">Что говорят покупатели</h2>
+      <div class="cards3 cards3--reviews">
+        <blockquote class="review review--photo reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/review_bedside_00001.webp" width="1184" height="896" alt="Ночник с гравированным портретом на прикроватной тумбочке — фото покупателя" loading="lazy">
+          <p class="stars" aria-label="Оценка 5 из 5">★★★★★</p>
+          <p>«Заказывала ночник с портретом дочки в подарок мужу — он растаял. Гравировка точь-в-точь как на фото, свет тёплый и мягкий.»</p>
+          <footer>Ольга · ВКонтакте</footer>
+        </blockquote>
+        <blockquote class="review review--photo reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/review_cosmos_00001.webp" width="1184" height="896" alt="Ночник с гравировкой космонавта в скафандре на полке у растения — фото покупателя" loading="lazy">
+          <p class="stars" aria-label="Оценка 5 из 5">★★★★★</p>
+          <p>«Сделали за сутки, как и обещали. Упаковано аккуратно, приехало целым. Заказываю второй раз, теперь в подарок маме.»</p>
+          <footer>Владимир · ВКонтакте</footer>
+        </blockquote>
+        <blockquote class="review review--photo reveal">
+          <img onerror="this.onerror=null;void 0" src="assets/review_gift_00001.webp" width="1184" height="896" alt="Ночник с гравированным портретом в руках над подарочной коробкой — фото покупателя" loading="lazy">
+          <p class="stars" aria-label="Оценка 5 из 5">★★★★★</p>
+          <p>«Дарила сестре на годовщину — она сначала не поняла, что это её портрет. Выглядит дорого, все гости спрашивают, где заказывала.»</p>
+          <footer>Светлана · ВКонтакте</footer>
+        </blockquote>
+      </div>
+
+      <p class="note reviews__note">Кадры прислали покупатели — публикую с их разрешения. Больше отзывов и живых фото — <a href="https://vk.com/formaluch" target="_blank" rel="noopener">в сообществе во ВКонтакте</a>.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <p class="eyebrow">Вопросы</p>
+      <h2 class="h2 h2--shine">Частые вопросы</h2>
+      <div class="faq">
+        <details class="reveal">
+          <summary>Сколько стоит ночник?</summary>
+          <p>2 200 ₽ за модель из каталога. Своя гравировка по вашему фото — от 2 500 ₽, зависит от сложности рисунка.</p>
+        </details>
+        <details class="reveal">
+          <summary>Как быстро будет готово?</summary>
+          <p>Обычно 24 часа после согласования макета. В сезон праздников — до 48 часов, предупрежу заранее.</p>
+        </details>
+        <details class="reveal">
+          <summary>Можно своё фото?</summary>
+          <p>Да. Пришлите фото в сообщения сообщества — сделаю макет и покажу превью до оплаты.</p>
+        </details>
+        <details class="reveal">
+          <summary>Как оплатить?</summary>
+          <p>Переводом на карту или по счёту. Оплата после того, как согласуем макет.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap footer__in">
+    <div class="footer__brand">
+      <p class="footer__logo">Форма &amp; Луч</p>
+      <p>Авторские интерьерные ночники, подарки и 3D-печать. Делаю сам, в Балаково.</p>
+      <p class="footer__cta">Заказать в сообщениях сообщества или в Telegram</p>
+      <div class="footer__actions">
+        <a class="btn" href="https://vk.com/formaluch" target="_blank" rel="noopener">Написать во ВКонтакте</a>
+        <a class="btn btn--ghost" href="https://t.me/sokolkk" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M21.8 4.3 18.9 19c-.2 1-.8 1.2-1.6.8l-4.4-3.3-2.1 2c-.2.3-.5.4-.9.4l.3-4.4 8-7.2c.3-.3 0-.5-.5-.2L7.3 12.7 3 11.4c-.9-.3-.9-.9.2-1.3l17-6.6c.8-.3 1.5.2 1.3 1.4z"/></svg>
+          Заказать в Telegram
+        </a>
+      </div>
+    </div>
+    <div class="footer__contacts">
+      <h2 class="h4">Контакты</h2>
+      <p><a href="https://vk.com/formaluch" target="_blank" rel="noopener">ВКонтакте: vk.com/formaluch</a></p>
+      <p><a href="https://t.me/sokolkk" target="_blank" rel="noopener">Telegram: @sokolkk</a></p>
+      <p>Авторские интерьерные ночники, подарки и 3D-печать</p>
+      <p>Балаково · отправка по всей России</p>
+      <p>Сайт: <a href="https://formaluch.ru/" target="_blank" rel="noopener">formaluch.ru</a></p>
+      <p><a href="https://3d.formaluch.ru/" target="_blank" rel="noopener">3D-печать: 3d.formaluch.ru</a></p>
+
+      <div class="dev">
+        <p class="dev__label">Заказать разработку сайта</p>
+        <p class="dev__lead">Студия FutureSphinx: сайты и лендинги, интернет-магазины, MVP, ИИ-агенты и автоматизация.</p>
+        <a class="dev__link" href="https://futuresphinx.ru/" target="_blank" rel="noopener">
+          futuresphinx.ru
+          <svg class="dev__arrow" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 12 12 4M6 4h6v6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Проекты семейства: три площадки с цветовым кодом -->
+  <div class="wrap">
+    <div class="projects">
+      <p class="projects__title">Проекты</p>
+      <div class="projects__row">
+        <a class="switch__item" href="https://formaluch.ru/" target="_blank" rel="noopener" aria-current="true">
+          <span class="switch__dot" aria-hidden="true"></span>
+          <span class="switch__name">Ночники</span>
+          <span class="projects__host">formaluch.ru</span>
+        </a>
+        <a class="switch__item switch__item--print" href="https://3d.formaluch.ru/" target="_blank" rel="noopener">
+          <span class="switch__dot" aria-hidden="true"></span>
+          <span class="switch__name">3D-печать</span>
+          <span class="projects__host">3d.formaluch.ru</span>
+        </a>
+        <a class="switch__item switch__item--dev" href="https://futuresphinx.ru/" target="_blank" rel="noopener">
+          <span class="switch__dot" aria-hidden="true"></span>
+          <span class="switch__name">Разработка</span>
+          <span class="projects__host">futuresphinx.ru</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap footer__legal">
+    <p>© <span id="year">2026</span> Форма &amp; Луч. Изображения товаров — примеры. Изготовление на заказ.</p>
+  </div>
+</footer>
+
+<!-- Кнопка «наверх»: показывается после прокрутки -->
+<button class="to-top" id="toTop" type="button" aria-label="Вернуться наверх">
+  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script src="effects.js" defer></script>
+<script src="script.js" defer></script>
+</body></html>

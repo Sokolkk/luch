@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Форма и Луч">
+  <defs>
+    <linearGradient id="g" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#e8b84b"/>
+      <stop offset="1" stop-color="#f5ded8"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="62%" r="55%">
+      <stop offset="0" stop-color="#e8b84b" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#e8b84b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0f0e0c"/>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#2a2724" stroke-width="2"/>
+  <!-- Тёплое свечение ночника -->
+  <circle cx="32" cy="30" r="22" fill="url(#glow)"/>
+  <!-- Основание из дерева -->
+  <rect x="20" y="46" width="24" height="6" rx="2" fill="#8a6a34"/>
+  <!-- Луч света от гравировки -->
+  <path d="M32 12 L26 46 L38 46 Z" fill="url(#g)" opacity=".92"/>
+  <circle cx="32" cy="15" r="3.4" fill="#f5ede0"/>
+</svg>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://formaluch.ru/sitemap.xml
